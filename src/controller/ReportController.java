@@ -65,47 +65,29 @@ public class ReportController {
         ObservableList<Course> observableCourses = FXCollections.observableArrayList();
         observableCourses.addAll(agenda.getCourses());
         coursesTVColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        coursesTVColumn.setCellFactory(col -> new TableCell<Course, Course>() {
-//            @Override
-//            public void updateItem(Course item, boolean empty) {
-//                super.updateItem(item, empty);
-//                Course auxCourse = getTableView().getSelectionModel().getSelectedItem();
-//                if (agenda.mostAssignedCourse().equals(item)) {
-//                    setTextFill(Color.WHITE);
-//                    setStyle("-fx-background-color: green");
-//                } else if(agenda.leastAssignedCourse().equals(item)) {
-//                    setTextFill(Color.WHITE);
-//                    setStyle("-fx-background-color: red");
-//                }
-//            }
-//        });
-        coursesTVColumn.setCellFactory(column -> {
-            return new TableCell<Course, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
+        coursesTVColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
 
-                    if (item == null || empty) {
+                if (item == null || empty) {
 //                        setText(null);
 //                        setStyle("");
-                    } else {
+                } else {
 
-                        setText(item);
+                    setText(item);
 
-                        //We get here all the info of the Person of this row
-                        Course auxCourse = getTableView().getItems().get(getIndex());
+                    Course auxCourse = getTableView().getItems().get(getIndex());
 
-                        // Style all persons wich name is "Edgard"
-                        if (agenda.mostAssignedCourse().equals(auxCourse)) {
-                            setTextFill(Color.WHEAT); //The text in red
-                            setStyle("-fx-background-color: green"); //The background of the cell in yellow
-                        } else if (agenda.leastAssignedCourse().equals(auxCourse)) {
-                            setTextFill(Color.WHEAT); //The text in red
-                            setStyle("-fx-background-color: red"); //The background of the cell in yellow
-                        }
+                    if (agenda.mostAssignedCourse().equals(auxCourse)) {
+                        setTextFill(Color.WHEAT);
+                        setStyle("-fx-background-color: green");
+                    } else if (agenda.leastAssignedCourse().equals(auxCourse)) {
+                        setTextFill(Color.WHEAT);
+                        setStyle("-fx-background-color: red");
                     }
                 }
-            };
+            }
         });
         coursesTV.setItems(observableCourses);
     }

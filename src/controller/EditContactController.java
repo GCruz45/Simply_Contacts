@@ -2,10 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,9 +11,6 @@ import javafx.stage.Stage;
 import model.Agenda;
 import model.Course;
 import model.Student;
-
-import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 /**
  * Controller Class for the Edit Contact window.

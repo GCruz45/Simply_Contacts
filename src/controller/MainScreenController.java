@@ -107,16 +107,32 @@ public class MainScreenController {
 
     @FXML
     void editCourse() throws IOException {//TODO: Fix
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/EditCourse.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setTitle("Edit Course");
-        EditCourseController editCourseCtrl = fxmlLoader.getController();
-        editCourseCtrl.courseNameLabel.setText(coursesTV.getSelectionModel().getSelectedItem().toString());//TODO: check if works
-        editCourseCtrl.setStage(stage);
-        stage.setScene(scene);
-        stage.show();
+        Course selectedCourse = coursesTV.getSelectionModel().getSelectedItem();
+        Course courseToPass = null;
+        if (selectedCourse != null) {
+            for (Course course: agenda.getCourses()
+                 ) {
+                if (selectedCourse.equals(course)) {
+                    courseToPass = course;
+                    break;
+                }
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/EditCourse.fxml"));
+            Parent root = fxmlLoader.load();
+            EditCourseController controller = fxmlLoader.getController();
+            controller.setAgenda(agenda);
+            controller.setCourse(courseToPass);
+            controller.setup(this);
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setTitle("Edit Course");
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No course selected.", ButtonType.OK);
+            alert.show();
+        }
+
     }
 
     @FXML
@@ -224,7 +240,7 @@ public class MainScreenController {
 
     public void loadStudent() {
         if (!currentStudent.getPictureURL().equals(" ")) {
-                studentPhoto.setImage(new Image(currentStudent.getPictureURL()));
+            studentPhoto.setImage(new Image(currentStudent.getPictureURL()));
         } else {
             studentPhoto.setImage(new Image("https://www.sackettwaconia.com/wp-content/uploads/default-profile.png"));
         }
